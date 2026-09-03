@@ -17,6 +17,7 @@
     "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\""
   },
   "dependencies": {
+    "vite": "^6.2.0",
     "@supabase/supabase-js": "^2.110.7",
     "bcryptjs": "^3.0.3",
     "better-sqlite3": "^12.11.1",
@@ -42,8 +43,8 @@
     "@tailwindcss/vite": "^4.3.3",
     "@vitejs/plugin-react": "^5.0.0",
     "concurrently": "^9.2.1",
-    "tailwindcss": "^4.3.3",
-    "vite": "^6.2.0"
+    "tailwindcss": "^4.3.3"
+    
   },
   "allowScripts": {
     "better-sqlite3@12.11.1": true,
