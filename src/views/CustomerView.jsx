@@ -47,6 +47,10 @@ function getBrowserLocation() {
 
 const CustomerView = () => {
   const navigate = useNavigate();
+  const qrTable = useMemo(
+    () => (new URLSearchParams(window.location.search).get('table') || '').trim(),
+    []
+  );
   const [menu, setMenu] = useState(null);
   const [tables, setTables] = useState([]);
   const [cart, setCart] = useState({});
@@ -66,7 +70,7 @@ const CustomerView = () => {
   const [formData, setFormData] = useState({
     name: saved.name || '',
     phone: saved.phone || '',
-    table: '',
+    table: qrTable,
     orderType: 'dine',
     note: '',
   });
@@ -127,11 +131,6 @@ const CustomerView = () => {
       .catch(() => setMenu([]));
 
     checkGate(null); // first pass without location
-
-    // Table comes in from the QR code (?table=N). Pre-select it and force
-    // dine-in so the customer lands ready to order at their seat.
-    const table = (new URLSearchParams(window.location.search).get('table') || '').trim();
-    if (table) setFormData((p) => ({ ...p, table, orderType: 'dine' }));
 
     // live menu updates when the owner edits items
     const socket = getSocket();
@@ -507,9 +506,16 @@ const CustomerView = () => {
               </div>
 
               {formData.orderType === 'dine' ? (
-                <div className="grid grid-cols-5 gap-2">
-                  <p className="col-span-5 text-center font-bold">Table No.</p>
-                  {tables.map((t) => (
+                <div className={qrTable ? '' : 'grid grid-cols-5 gap-2'}>
+                  <p className={qrTable ? 'text-center font-bold' : 'col-span-5 text-center font-bold'}>
+                    Table No.
+                  </p>
+                  {qrTable ? (
+                    <div className="mt-2 bg-chiya text-white rounded-lg py-2.5 text-center font-bold">
+                      {qrTable}
+                      <span className="block text-[10px] uppercase tracking-wider opacity-80">Locked from QR</span>
+                    </div>
+                  ) : tables.map((t) => (
                     <button
                       key={t}
                       type="button"
