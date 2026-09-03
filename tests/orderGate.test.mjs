@@ -7,7 +7,7 @@ import assert from 'node:assert/strict';
 const { ipMatches } = await import('../server/orderGate.js');
 
 test('IPv4 CIDR allowlist matches the café subnet', () => {
-  assert.equal(ipMatches('203.0.113.42', '203.0.113.0/24'), true);
+  assert.equal(ipMatches('203.0.113.42', '203.0.113.0/24'), true); 
   assert.equal(ipMatches('203.0.113.42', '203.0.114.0/24'), false);
 });
 

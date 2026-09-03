@@ -9,6 +9,8 @@ dist/
 .env
 .env.*
 !.env.example
+*.sql
+tests/
 
 # generated JWT secret + any local SQLite leftovers from the pre-Supabase era
 data/.jwt-secret
