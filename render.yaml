@@ -1,0 +1,30 @@
+# Render blueprint — https://render.com/docs/blueprint-spec
+# Version-controls the deploy so TRUST_PROXY and the build/start commands don't
+# live only in the dashboard. Secrets (Supabase keys) stay dashboard-managed:
+# sync:false means Render prompts for them once and never stores them in git.
+services:
+  - type: web
+    name: folsom-cafe
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      # One proxy hop in front of the app → req.ip becomes the real client IP,
+      # which the in-café order lock (IP allowlist) depends on. Do not remove.
+      - key: TRUST_PROXY
+        value: "1"
+      - key: NODE_VERSION
+        value: "20"
+      - key: TABLE_COUNT
+        value: "11"
+      # Set these in the Render dashboard (Environment tab) — never commit them.
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_ANON_KEY
+        sync: false
+      # Optional: pin a stable JWT secret so logins survive redeploys without
+      # relying on the on-disk fallback (Render's disk is ephemeral).
+      - key: JWT_SECRET
+        sync: false

@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-handwritten: "Lobster", Pacifico;
+  --color-cream: #fff6e5;
+  --color-latte: #d9b382;
+  --color-chiya: #c76b2a;
+  --color-espresso: #6f4e37;
+  --color-bean: #4a3728;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-cream);
+  color: var(--color-bean);
+  background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Keyboard users get a clear ring; mouse/touch users don't see it. */
+:focus-visible {
+  outline: 2px solid var(--color-chiya);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+button {
+  cursor: pointer;
+  touch-action: manipulation; /* no 300ms double-tap zoom delay on mobile */
+}
+
+body::selection {
+  background-color: var(--color-latte);
+  color: #fffcf6;
+}
+
+.handwritten {
+  font-family: var(--font-handwritten);
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@keyframes steam {
+  0% { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
+  30% { opacity: 0.8; }
+  100% { transform: translateY(-30px) translateX(10px) scale(1.8); opacity: 0; }
+}
+.steam-particle {
+  animation: steam 2s infinite ease-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+.animate-shake {
+  animation: shake 0.3s ease-in-out 2;
+}

@@ -1,0 +1,53 @@
+{
+  "name": "hamro-chiya-pasal",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Folsom Cafe & Resturent — LAN tea-shop POS (browser-based)",
+  "author": "Alex Taigour",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "build": "vite build",
+    "start": "node server.js",
+    "preview": "vite preview",
+    "dev:backend": "node server.js",
+    "dev:frontend": "node scripts/wait-for-backend.js && vite",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\""
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.110.7",
+    "bcryptjs": "^3.0.3",
+    "better-sqlite3": "^12.11.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.6.0",
+    "helmet": "^8.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "lucide-react": "0.475.0",
+    "motion": "^12.42.2",
+    "qrcode": "^1.5.4",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "react-router-dom": "^7.11.0",
+    "recharts": "^3.6.0",
+    "socket.io": "^4.8.3",
+    "socket.io-client": "^4.8.3",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@vitejs/plugin-react": "^5.0.0",
+    "concurrently": "^9.2.1",
+    "tailwindcss": "^4.3.3",
+    "vite": "^6.2.0"
+  },
+  "allowScripts": {
+    "better-sqlite3@12.11.1": true,
+    "esbuild@0.25.12": true,
+    "@tailwindcss/oxide@4.3.3": true
+  }
+}
