@@ -9,13 +9,15 @@ import Login from './views/Login';
 import StaffView from './views/StaffView';
 import KitchenView from './views/KitchenView';
 import OwnerDashboard from './views/owner/OwnerDashboard';
+import { PLATFORM_NAME, PLATFORM_TAGLINE, PLATFORM_COMPANY, PLATFORM_COMPANY_URL } from './utils/brand';
 
 const App = () => (
   <AuthProvider>
     <BrowserRouter>
-      <div className="min-h-screen">
+      <div className="min-h-screen flex flex-col">
         <ToastHost />
-        <Routes>
+        <div className="flex-1">
+          <Routes>
           <Route path="/" element={<CustomerView />} />
           <Route path="/track/:publicCode" element={<OrderTrack />} />
           <Route path="/login" element={<Login />} />
@@ -47,7 +49,12 @@ const App = () => (
           <Route path="/admin" element={<Navigate to="/login" replace />} />
           <Route path="/admin/login" element={<Navigate to="/login" replace />} />
           <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
+          </Routes>
+        </div>
+        <footer className="border-t border-bean/10 bg-white/60 px-6 py-4 text-center text-[10px] text-bean/60">
+          <p className="font-black tracking-wide">Powered by {PLATFORM_NAME}™</p>
+          <p className="mt-0.5">{PLATFORM_TAGLINE} · A product from <a href={PLATFORM_COMPANY_URL} target="_blank" rel="noreferrer" className="font-bold underline underline-offset-2 hover:text-chiya">{PLATFORM_COMPANY}</a></p>
+        </footer>
       </div>
     </BrowserRouter>
   </AuthProvider>

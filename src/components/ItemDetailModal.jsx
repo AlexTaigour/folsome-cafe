@@ -41,7 +41,7 @@ export default function ItemDetailModal({ item, quantity, onUpdateQuantity, onCl
           <button
             onClick={onClose}
             aria-label="Close"
-            className="absolute top-3 right-3 p-2 bg-white/90 backdrop-blur-sm rounded-full shadow-md text-bean active:scale-90 transition-transform"
+            className="absolute top-3 right-3 p-2 bg-white/90 backdrop-blur-sm rounded-full shadow-md text-bean z-10 active:scale-90 transition-transform"
           >
             <X size={18} />
           </button>

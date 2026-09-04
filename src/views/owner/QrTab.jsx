@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import QRCode from 'qrcode';
 import { Printer, Loader2, AlertTriangle } from 'lucide-react';
 import { fetchTables, fetchServerInfo } from '../../api/client';
+import { CAFE_NAME } from '../../utils/brand';
 
 // The URL a table's QR points at. Customers scan it and land on the menu with
 // their table already selected (CustomerView reads ?table=N on load).
@@ -34,7 +35,7 @@ function TableQr({ url, table }) {
   }, [url]);
   return (
     <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 text-center">
-      <p className="handwritten text-xl font-bold text-espresso mb-1">Folsom Cafe & Resturent</p>
+      <p className="handwritten text-xl font-bold text-espresso mb-1">{CAFE_NAME}</p>
       <canvas ref={canvasRef} className="mx-auto" />
       <p className="font-black text-2xl text-bean mt-2">Table {table}</p>
       <p className="text-[10px] text-gray-400 font-bold">Scan to order ☕</p>
@@ -51,7 +52,7 @@ function buildPrintHtml(cards) {
     .map(
       ({ table, dataUrl }) => `
       <section class="page">
-        <div class="cafe">Folsom Cafe &amp; Resturent</div>
+        <div class="cafe">${CAFE_NAME}</div>
         <img class="qr" src="${dataUrl}" alt="QR for table ${table}" />
         <div class="table">Table ${table}</div>
         <div class="hint">Scan with your phone camera to order &#9749;</div>
@@ -62,7 +63,7 @@ function buildPrintHtml(cards) {
 <html>
 <head>
 <meta charset="utf-8" />
-<title>Table QR Codes — Folsom Cafe</title>
+<title>Table QR Codes — ${CAFE_NAME}</title>
 <style>
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }

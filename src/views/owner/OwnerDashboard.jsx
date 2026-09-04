@@ -11,6 +11,7 @@ import OrderGateTab from './OrderGateTab';
 import DayReportTab from './DayReportTab';
 import CreditTab from './CreditTab';
 import OrderHistoryTab from './OrderHistoryTab';
+import { CAFE_NAME, PLATFORM_NAME } from '../../utils/brand';
 
 const TABS = [
   { to: '/owner', end: true, icon: TrendingUp, label: 'Analytics' },
@@ -44,8 +45,9 @@ export default function OwnerDashboard() {
             <Coffee size={24} />
           </div>
           <div>
-            <h1 className="text-xl font-bold handwritten tracking-wider">HCP Owner</h1>
+            <h1 className="text-xl font-bold handwritten tracking-wider">{CAFE_NAME}</h1>
             <p className="text-[10px] uppercase font-black opacity-50 tracking-widest">{user?.displayName}</p>
+            <p className="text-[9px] opacity-50 mt-1">Powered by {PLATFORM_NAME}™</p>
           </div>
         </div>
 

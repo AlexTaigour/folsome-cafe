@@ -1,4 +1,5 @@
 import { formatDateTime } from './format';
+import { CAFE_NAME, PLATFORM_NAME } from './brand';
 
 const escapeHtml = (v) =>
   String(v ?? '')
@@ -27,7 +28,7 @@ export function printBill(order) {
   w.document.write(`<!DOCTYPE html>
 <html>
 <head>
-  <title>HCP - Bill ${escapeHtml(order.publicCode)}</title>
+  <title>${escapeHtml(CAFE_NAME)} - Bill ${escapeHtml(order.publicCode)}</title>
   <style>
     body { font-family: 'Courier New', monospace; padding: 20px; color: #000; background: #fff; }
     .header { text-align: center; border-bottom: 2px solid #000; margin-bottom: 10px; padding-bottom: 10px; }
@@ -46,7 +47,7 @@ export function printBill(order) {
 </head>
 <body>
   <div class="header">
-    <h1>Folsom Cafe & Resturent</h1>
+    <h1>${escapeHtml(CAFE_NAME)}</h1>
     <p>"Ek Cup Chiya, Dherai Kura"</p>
   </div>
   <div class="details">
@@ -61,7 +62,7 @@ export function printBill(order) {
     <tbody>${rows}</tbody>
   </table>
   <div class="total-row">TOTAL: Rs. ${escapeHtml(order.total)}</div>
-  <div class="footer">Visit again soon!</div>
+  <div class="footer">Visit again soon! · Powered by ${PLATFORM_NAME}™</div>
   <script>window.onload = () => { window.print(); setTimeout(() => window.close(), 500); };</script>
 </body>
 </html>`);
@@ -98,7 +99,7 @@ export function printTableBill(bill, payment) {
   w.document.write(`<!DOCTYPE html>
 <html>
 <head>
-  <title>HCP - Table ${escapeHtml(bill.tableNo)} Bill</title>
+  <title>${escapeHtml(CAFE_NAME)} - Table ${escapeHtml(bill.tableNo)} Bill</title>
   <style>
     body { font-family: 'Courier New', monospace; padding: 20px; color: #000; background: #fff; }
     .header { text-align: center; border-bottom: 2px solid #000; margin-bottom: 10px; padding-bottom: 10px; }
@@ -121,7 +122,7 @@ export function printTableBill(bill, payment) {
 </head>
 <body>
   <div class="header">
-    <h1>Folsom Cafe & Resturent</h1>
+    <h1>${escapeHtml(CAFE_NAME)}</h1>
     <p>"Ek Cup Chiya, Dherai Kura"</p>
   </div>
   <div class="details">
@@ -150,7 +151,7 @@ export function printTableBill(bill, payment) {
         }</div>`
       : ''
   }
-  <div class="footer">Visit again soon!</div>
+  <div class="footer">Visit again soon! · Powered by ${PLATFORM_NAME}™</div>
   <script>window.onload = () => { window.print(); setTimeout(() => window.close(), 500); };</script>
 </body>
 </html>`);

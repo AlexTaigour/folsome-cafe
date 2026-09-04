@@ -4,6 +4,7 @@ import { Lock, User, Coffee, ChevronRight, Eye, EyeOff } from 'lucide-react';
 import { useAuth, HOME_BY_ROLE } from '../context/AuthContext';
 import BlurText from '../components/reactbits/BlurText';
 import ShinyButton from '../components/reactbits/ShinyButton';
+import { CAFE_NAME, PLATFORM_NAME, PLATFORM_COMPANY } from '../utils/brand';
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -43,10 +44,11 @@ export default function Login() {
             <Coffee size={40} className="text-espresso" />
           </div>
           <div className="text-center">
-            <BlurText as="h1" text="HCP Login" className="text-3xl font-bold text-bean handwritten block" />
+            <BlurText as="h1" text={CAFE_NAME} className="text-3xl font-bold text-bean handwritten block" />
             <p className="text-[10px] uppercase font-black text-gray-400 tracking-[0.2em] mt-1">
               Staff · Kitchen · Owner
             </p>
+            <p className="text-[10px] text-gray-400 mt-2">Powered by {PLATFORM_NAME}™ · {PLATFORM_COMPANY}</p>
           </div>
         </div>
 
