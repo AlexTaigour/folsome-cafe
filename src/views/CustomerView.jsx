@@ -232,8 +232,8 @@ const CustomerView = () => {
   if (!menu) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-bean text-white">
-        <div className="relative mb-6 items-center justify-center inline-block">
-          <img src="../../resources/logo.png" alt="Logo" className='relative w-20 h-auto' />
+        <div className="relative mb-6 items-center justify-center flex flex-col">
+          <img src="../../resources/logo.png" alt="Logo" className='relative w-30 h-auto' />
           <h3 className="text-2xl mt-3 md:text-5xl font-bold handwritten">Folsom Cafe & Resturent</h3>
         </div>
         <div className="w-48 h-1 bg-white/20 rounded overflow-hidden">
