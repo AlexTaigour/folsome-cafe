@@ -6,6 +6,7 @@ import { getSocket } from '../api/socket';
 import { MenuCard } from '../components/MenuCard';
 import ItemDetailModal from '../components/ItemDetailModal';
 import { SteamAnimation } from '../components/SteamAnimation';
+import BrewingLoader from '../components/BrewingLoader';
 import BlurText from '../components/reactbits/BlurText';
 import AnimatedList from '../components/reactbits/AnimatedList';
 import ClickSpark from '../components/reactbits/ClickSpark';
@@ -16,7 +17,7 @@ import { CAFE_NAME, PLATFORM_NAME, CAFE_LOGO } from '../utils/brand';
 // Returning customers skip retyping their details.
 const saved = (() => {
   try {
-    return JSON.parse(localStorage.getItem('hcp_customer') || '{}');
+    return JSON.parse(localStorage.getItem('tvx_customer') || '{}');
   } catch {
     return {};
   }
@@ -24,7 +25,7 @@ const saved = (() => {
 
 const lastOrderCode = () => {
   try {
-    const { code, at } = JSON.parse(localStorage.getItem('hcp_last_order') || '{}');
+    const { code, at } = JSON.parse(localStorage.getItem('tvx_last_order') || '{}');
     // only offer tracking for a recent order (same visit, ~3h)
     return code && Date.now() - at < 3 * 60 * 60 * 1000 ? code : null;
   } catch {
@@ -215,8 +216,8 @@ const CustomerView = () => {
         items: cartItems.map((i) => ({ menuItemId: i.id, qty: i.qty })),
       });
       try {
-        localStorage.setItem('hcp_customer', JSON.stringify({ name: formData.name, phone: formData.phone }));
-        localStorage.setItem('hcp_last_order', JSON.stringify({ code: order.publicCode, at: Date.now() }));
+        localStorage.setItem('tvx_customer', JSON.stringify({ name: formData.name, phone: formData.phone }));
+        localStorage.setItem('tvx_last_order', JSON.stringify({ code: order.publicCode, at: Date.now() }));
       } catch {}
       setCart({});
       setShowOrderForm(false);
@@ -231,22 +232,41 @@ const CustomerView = () => {
   };
 
   if (!menu) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-bean text-white">
-        <div className="relative mb-6 items-center justify-center flex flex-col">
-          <img src={CAFE_LOGO} alt="Logo" className='relative w-30 h-auto' />
-          <h3 className="text-2xl mt-3 md:text-5xl font-bold handwritten">{CAFE_NAME}</h3>
-        </div>
-        <div className="w-48 h-1 bg-white/20 rounded overflow-hidden">
-          <div className="h-full w-1/2 bg-chiya animate-pulse" />
-        </div>
-      </div>
-    );
+    return <BrewingLoader splash label="Brewing your menu" />;
   }
 
   return (
     <div className="max-w-6xl mx-auto min-h-screen pb-28">
-      <header className="bg-gradient-to-b from-espresso to-bean text-white p-10 rounded-b-[3rem] text-center relative shadow-xl">
+      <header className="relative overflow-hidden bg-gradient-to-b from-espresso to-bean text-white p-10 pb-12 rounded-b-[3rem] text-center shadow-xl">
+        {/* layered warm ambiance */}
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_-10%,rgba(217,179,130,0.40),transparent_55%)]" />
+        <div className="pointer-events-none absolute inset-0 opacity-[0.06] bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')]" />
+
+        {/* coffee beans drifting quietly in the background */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden text-latte">
+          {[
+            { left: '8%', top: '20%', size: 30, r: -18, dur: '9s', delay: '0s', op: 0.16 },
+            { left: '85%', top: '14%', size: 42, r: 24, dur: '11s', delay: '1.2s', op: 0.13 },
+            { left: '73%', top: '56%', size: 26, r: -8, dur: '8s', delay: '0.6s', op: 0.11 },
+            { left: '14%', top: '60%', size: 34, r: 14, dur: '12s', delay: '2s', op: 0.13 },
+            { left: '45%', top: '80%', size: 22, r: 32, dur: '10s', delay: '0.3s', op: 0.10 },
+          ].map((b, i) => (
+            <span
+              key={i}
+              className="animate-bean-float absolute block"
+              style={{ left: b.left, top: b.top, width: b.size, height: b.size * 1.4, opacity: b.op, '--r': `${b.r}deg`, '--dur': b.dur, animationDelay: b.delay }}
+            >
+              <svg viewBox="0 0 40 56" fill="none" className="h-full w-full">
+                <path d="M20 2C29 2 36 13 36 28S29 54 20 54 4 43 4 28 11 2 20 2Z" fill="currentColor" />
+                <path d="M20 5C15 12 15 44 20 51" stroke="rgba(0,0,0,0.22)" strokeWidth="2.4" strokeLinecap="round" />
+              </svg>
+            </span>
+          ))}
+        </div>
+
+        {/* occasional warm light sweep */}
+        <div className="animate-gleam pointer-events-none absolute top-0 left-[-33%] h-full w-1/3 bg-gradient-to-r from-transparent via-white/12 to-transparent" />
+
         {trackable && (
           <button
             onClick={() => navigate(`/track/${trackable}`)}
@@ -256,16 +276,31 @@ const CustomerView = () => {
           </button>
         )}
         <div className="relative z-10">
-          <div className="relative mb-3 mt-10 inline-block">
-            <img src={CAFE_LOGO} alt="Logo" className='relative w-30 h-auto' />
+          <div className="relative mb-1 mt-10 inline-block">
+            {/* glowing halo behind the logo */}
+            <div className="pointer-events-none absolute inset-0 -m-6 rounded-full bg-[radial-gradient(circle,rgba(199,107,42,0.55),transparent_70%)] blur-xl animate-halo" />
+            <SteamAnimation />
+            <img
+              src={CAFE_LOGO}
+              alt="Logo"
+              fetchPriority="high"
+              decoding="async"
+              className="relative w-30 h-auto drop-shadow-[0_6px_16px_rgba(0,0,0,0.35)]"
+            />
           </div>
           <BlurText
             as="h1"
             text={CAFE_NAME}
-            className="text-2xl md:text-5xl font-bold handwritten block"
+            className="hero-wordmark text-4xl md:text-6xl font-bold handwritten block"
           />
-          <p className="text-xs opacity-80 italic mt-0.5 mb-3">Ek Cup Chiya, Dherai Kura</p>
-          <p className="text-[10px] opacity-60 tracking-wide">Powered by {PLATFORM_NAME}™</p>
+          {/* hand-drawn underline swash */}
+          <svg viewBox="0 0 200 18" fill="none" className="mx-auto mt-1 h-3.5 w-40 md:w-56" aria-hidden="true">
+            <path className="swash-path" d="M6 11C46 3 150 3 194 9" strokeWidth="4" strokeLinecap="round" />
+          </svg>
+          <p className="text-sm opacity-85 italic mt-2.5 mb-3">Ek Cup Chiya, Dherai Kura</p>
+          <p className="inline-flex items-center gap-1.5 text-[10px] opacity-60 tracking-wide">
+            <span className="h-px w-4 bg-white/40" /> Powered by {PLATFORM_NAME}™ <span className="h-px w-4 bg-white/40" />
+          </p>
           {formData.table && (
             <p className="mt-3 inline-block bg-chiya px-4 py-1 rounded-full text-xs font-black uppercase tracking-widest">
               Table {formData.table}

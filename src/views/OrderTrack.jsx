@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { Coffee, ArrowLeft, Loader2, Timer } from 'lucide-react';
+import { Coffee, ArrowLeft, Timer } from 'lucide-react';
 import { trackOrder } from '../api/client';
 import { getSocket } from '../api/socket';
 import StatusTimeline from '../components/StatusTimeline';
 import ServiceCallButtons from '../components/ServiceCallButtons';
 import BlurText from '../components/reactbits/BlurText';
+import BrewingLoader from '../components/BrewingLoader';
 import { formatRs } from '../utils/format';
 
 // What the customer actually wants to know at each step.
@@ -64,11 +65,7 @@ export default function OrderTrack() {
     );
   }
   if (!order) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="animate-spin text-espresso" size={40} />
-      </div>
-    );
+    return <BrewingLoader fullscreen tone="light" label="Fetching your order" />;
   }
 
   const isTakeaway = order.orderType === 'takeaway';

@@ -5,7 +5,7 @@ import { supabase, sb } from './db.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = path.join(__dirname, '..', 'data');
-const SQLITE_PATH = process.env.DB_PATH || path.join(DATA_DIR, 'hcp.db');
+const SQLITE_PATH = process.env.DB_PATH || path.join(DATA_DIR, 'tvx.db');
 
 const STATUS_MAP = {
   Pending: 'pending',

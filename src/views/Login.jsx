@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Lock, User, Coffee, ChevronRight, Eye, EyeOff } from 'lucide-react';
 import { useAuth, HOME_BY_ROLE } from '../context/AuthContext';
 import BlurText from '../components/reactbits/BlurText';
+import BrewingLoader from '../components/BrewingLoader';
 import ShinyButton from '../components/reactbits/ShinyButton';
 import { CAFE_NAME, PLATFORM_NAME, PLATFORM_COMPANY } from '../utils/brand';
 
@@ -28,6 +29,8 @@ export default function Login() {
       setBusy(false);
     }
   };
+
+  if (busy) return <BrewingLoader splash label="Signing you in" />;
 
   return (
     <div className="min-h-screen flex items-center justify-center p-6 bg-bean relative overflow-hidden">

@@ -7,6 +7,7 @@ import { useSound } from '../hooks/useSound';
 import { setOrderStatus, fetchMenu, setMenuItemAvailability } from '../api/client';
 import { getSocket } from '../api/socket';
 import AnimatedList from '../components/reactbits/AnimatedList';
+import BrewingLoader from '../components/BrewingLoader';
 import ChangePasswordModal from '../components/ChangePasswordModal';
 import { toast } from '../components/Toast';
 import { minutesSince } from '../utils/format';
@@ -172,7 +173,7 @@ function StockModal({ onClose }) {
 export default function KitchenView() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-  const { enabled, toggle, chime } = useSound('hcp_sound_kds');
+  const { enabled, toggle, chime } = useSound('tvx_sound_kds');
   const { orders, loading, applyStatusLocal } = useOrdersLive({ onNewOrder: chime });
   const [showChangePw, setShowChangePw] = useState(false);
   const [showStock, setShowStock] = useState(false);
@@ -212,7 +213,7 @@ export default function KitchenView() {
 
       {loading ? (
         <div className="flex justify-center py-20">
-          <Loader2 className="animate-spin text-chiya" size={40} />
+          <BrewingLoader tone="dark" label="Loading orders" />
         </div>
       ) : (
         <main className="p-4 md:p-6 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-[1600px] mx-auto">

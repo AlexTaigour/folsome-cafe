@@ -177,7 +177,7 @@ function generateCode() {
   let s = '';
   const bytes = crypto.randomBytes(6);
   for (const b of bytes) s += alphabet[b % alphabet.length];
-  return `HCP-${s}`;
+  return `TVX-${s}`;
 }
 
 export async function createOrder(data, user) {

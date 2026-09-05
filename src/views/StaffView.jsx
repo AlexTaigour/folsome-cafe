@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Bell, BellOff, LogOut, Coffee, Plus, LayoutDashboard, Loader2, KeyRound, Armchair, ClipboardList } from 'lucide-react';
+import { Bell, BellOff, LogOut, Coffee, Plus, LayoutDashboard, KeyRound, Armchair, ClipboardList } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useOrdersLive } from '../hooks/useOrdersLive';
 import { useSound } from '../hooks/useSound';
@@ -10,6 +10,7 @@ import NewOrderModal from '../components/NewOrderModal';
 import ChangePasswordModal from '../components/ChangePasswordModal';
 import TableBoard from '../components/TableBoard';
 import ServiceCallsBar from '../components/ServiceCallsBar';
+import BrewingLoader from '../components/BrewingLoader';
 
 export default function StaffView() {
   const { user, logout } = useAuth();
@@ -36,7 +37,7 @@ export default function StaffView() {
             <Coffee size={20} />
           </div>
           <div>
-            <h1 className="font-bold handwritten text-lg leading-tight">HCP Counter</h1>
+            <h1 className="font-bold handwritten text-lg leading-tight">TVX Counter</h1>
             <p className="text-[10px] uppercase font-black opacity-50 tracking-widest">
               {user?.displayName}
             </p>
@@ -111,7 +112,7 @@ export default function StaffView() {
 
         {loading ? (
           <div className="flex justify-center py-20">
-            <Loader2 className="animate-spin text-espresso" size={40} />
+            <BrewingLoader tone="light" label="Loading orders" />
           </div>
         ) : visible.length === 0 ? (
           <div className="text-center text-gray-400 py-20">

@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 
 // Two-tone chime via Web Audio — no asset file needed. Mute preference
 // persists per device (it's a device setting, not account data).
-export function useSound(storageKey = 'hcp_sound') {
+export function useSound(storageKey = 'tvx_sound') {
   const [enabled, setEnabled] = useState(() => localStorage.getItem(storageKey) !== 'off');
 
   const toggle = useCallback(() => {

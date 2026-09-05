@@ -32,7 +32,7 @@ function loadSecret() {
 }
 
 const JWT_SECRET = loadSecret();
-export const COOKIE_NAME = 'hcp_token';
+export const COOKIE_NAME = 'tvx_token';
 const TOKEN_TTL = '12h';
 
 export const hashPassword = (plain) => bcrypt.hashSync(plain, 10);
